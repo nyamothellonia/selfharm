@@ -25,6 +25,18 @@
             crossorigin="anonymous"></script>
 
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
+
+    <style>
+        .scroll::-webkit-scrollbar{　　/*tableにスクロールバーを追加*/
+        height: 5px;
+        }
+        .scroll::-webkit-scrollbar-track{　　/*tableにスクロールバーを追加*/
+        background: #F1F1F1;
+        }
+        .scroll::-webkit-scrollbar-thumb {　　/*tableにスクロールバーを追加*/
+        background: #BCBCBC;
+        }
+    </style>
 </head>
 <body style="background-color:#fcfcfc">
 <div class="container">
@@ -47,11 +59,11 @@
                 </div>
             </div>
 
-            <div>
-                <table class="table table-striped">
-                    <thead class="thead-inverse">
+            <div id="scroll" style="overflow: auto;white-space: nowrap;">
+                <table style="width:1000px;" class="table table-striped" style="table-layout:fixed;">
+                    <thead  class="thead-inverse">
                     <tr>
-                        <th>名前</th>
+                        <th style="width:100px">名前</th>
                         <th>ATK</th>
                         <th>自傷率</th>
                         <th>ダメージ効率</th>
@@ -66,7 +78,7 @@
                     </thead>
                     <tbody>
                     <tr v-for="ret in list">
-                        <td>{{ret.name}}</td>
+                        <td style="width:100px">{{ret.name}}</td>
                         <td>{{ret.atk}}</td>
                         <td>{{ret.selfdamage_per}}%</td>
                         <td>{{ret.enemydamage_per}}%</td>
@@ -86,7 +98,8 @@
 
     <p>
         <small>
-        ※ 計算結果は丸めの誤差等でずれる可能性があります。参考程度にしてください。
+            ※ 計算結果は横にスクロールします。
+            ※ 計算結果は丸めの誤差等でずれる可能性があります。参考程度にしてください。
         </small>
     </p>
     <hr>
