@@ -53,11 +53,15 @@
                     <tr>
                         <th>名前</th>
                         <th>ATK</th>
-                        <th>自傷ダメージ率</th>
-                        <th>相手へのダメージ率</th>
+                        <th>自傷率</th>
+                        <th>ダメージ効率</th>
                         <th>自傷ダメージ</th>
                         <th>相手へのダメージ</th>
-                        <th>合計ダメージ</th>
+                        <th>1枚返し</th>
+                        <th>2枚返し</th>
+                        <th>3枚返し</th>
+                        <th>4枚返し</th>
+                        <th>5枚返し</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -68,30 +72,11 @@
                         <td>{{ret.enemydamage_per}}%</td>
                         <td>{{selfdamage(ret) | delimiter}}</td>
                         <td>{{enemydamage(ret) | delimiter}}</td>
-                        <td>
-                            <a :href="'#demo'+ret.name" data-toggle="collapse">{{totaldamage(ret) | delimiter}} ▼</a>
-                            <div :id="'demo'+ret.name" class="collapse">
-                                <table class="table table-striped">
-                                    <tr>
-                                        <th>2</th>
-                                        <th>{{resultdamage(ret,1.20) | delimiter}}</th>
-                                    </tr>
-                                    <tr>
-                                        <th>3</th>
-                                        <th>{{resultdamage(ret,1.44) | delimiter}}</th>
-                                    </tr>
-                                    <tr>
-                                        <th>4</th>
-                                        <th>{{resultdamage(ret,1.728) | delimiter}}</th>
-                                    </tr>
-                                    <tr>
-                                        <th>5</th>
-                                        <th>{{resultdamage(ret,2.0736) | delimiter}}</th>
-                                    </tr>
-                                </table>
-
-                            </div>
-                        </td>
+                        <td>{{resultdamage(ret,1) | delimiter}}</td>
+                        <td>{{resultdamage(ret,1.20) | delimiter}}</td>
+                        <td>{{resultdamage(ret,1.44) | delimiter}}</td>
+                        <td>{{resultdamage(ret,1.728) | delimiter}}</td>
+                        <td>{{resultdamage(ret,2.0736) | delimiter}}</td>
                     </tr>
                     </tbody>
                 </table>
