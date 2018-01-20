@@ -26,15 +26,17 @@
 
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
 
-    <style>
-        .scroll::-webkit-scrollbar{　　/*tableにスクロールバーを追加*/
-        height: 5px;
+    <style type="text/css">
+        .scroll::-webkit-scrollbar {
+            　　 /*tableにスクロールバーを追加*/ height: 5px;
         }
-        .scroll::-webkit-scrollbar-track{　　/*tableにスクロールバーを追加*/
-        background: #F1F1F1;
+
+        .scroll::-webkit-scrollbar-track {
+            　　 /*tableにスクロールバーを追加*/ background: #F1F1F1;
         }
-        .scroll::-webkit-scrollbar-thumb {　　/*tableにスクロールバーを追加*/
-        background: #BCBCBC;
+
+        .scroll::-webkit-scrollbar-thumb {
+            　　 /*tableにスクロールバーを追加*/ background: #BCBCBC;
         }
     </style>
 </head>
@@ -60,25 +62,25 @@
             </div>
 
             <div id="scroll" style="overflow: auto;white-space: nowrap;">
-                <table style="width:1000px;" class="table table-striped" style="table-layout:fixed;">
-                    <thead  class="thead-inverse">
+                <table style="width:500px;" class="table table-striped" style="table-layout:fixed;">
+                    <thead class="thead-inverse">
                     <tr>
-                        <th style="width:100px">名前</th>
+                        <th style="width:90px">名前</th>
                         <th>ATK</th>
                         <th>自傷率</th>
-                        <th>ダメージ効率</th>
-                        <th>自傷ダメージ</th>
-                        <th>相手へのダメージ</th>
+                        <th>相手<br>への<br>ダメージ<br>率</th>
+                        <th>自傷<br>ダメージ</th>
+                        <th>相手<br>への<br>ダメージ</th>
                         <th>1枚返し</th>
-                        <th>2枚返し</th>
-                        <th>3枚返し</th>
-                        <th>4枚返し</th>
-                        <th>5枚返し</th>
+                        <th>2枚</th>
+                        <th>3枚</th>
+                        <th>4枚</th>
+                        <th>5枚</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr v-for="ret in list">
-                        <td style="width:100px">{{ret.name}}</td>
+                        <td>{{ret.name}}</td>
                         <td>{{ret.atk}}</td>
                         <td>{{ret.selfdamage_per}}%</td>
                         <td>{{ret.enemydamage_per}}%</td>
@@ -95,13 +97,14 @@
             </div>
         </form>
     </div>
-
-    <p>
-        <small>
+    <small>
+        <p>
             ※ 計算結果は横にスクロールします。
+        </p>
+        <p>
             ※ 計算結果は丸めの誤差等でずれる可能性があります。参考程度にしてください。
-        </small>
-    </p>
+        </p>
+    </small>
     <hr>
     <div style="padding:10px;height:90px;display:flex;flex-flow:row;justify-content: center;">
 
