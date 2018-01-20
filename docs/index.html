@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+    <meta charset="UTF-8">
+    <title>自傷計算 - ツール</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png"/>
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="css/main.css">
+
+    <meta name="apple-mobile-web-app-title" content="蘭陵調整"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body style="background-color:#fcfcfc">
+<div class="container">
+    <div class="page-header">
+        <h2>自傷計算</h2>
+    </div>
+    <div id="app">
+        <form>
+            <div class="form-group">
+                <h3>最大HPの入力</h3>
+
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon" id="target-atk">最大HP</span>
+                    <input type="number" class="form-control" aria-describedby="target-atk" value=""
+                           v-model="hp"
+                           placeholder="">
+
+                </div>
+            </div>
+
+            <div>
+                <table class="table table-striped">
+                    <thead class="thead-inverse">
+                    <tr>
+                        <th>名前</th>
+                        <th>ATK</th>
+                        <th>自傷ダメージ率</th>
+                        <th>相手へのダメージ率</th>
+                        <th>自傷ダメージ</th>
+                        <th>相手へのダメージ</th>
+                        <th>合計ダメージ</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="ret in list">
+                        <td>{{ret.name}}</td>
+                        <td>{{ret.atk}}</td>
+                        <td>{{ret.selfdamage_per}}%</td>
+                        <td>{{ret.enemydamage_per}}%</td>
+                        <td>{{selfdamage(ret) | delimiter}}</td>
+                        <td>{{enemydamage(ret) | delimiter}}</td>
+                        <td>
+                            <a :href="'#demo'+ret.name" data-toggle="collapse">{{totaldamage(ret) | delimiter}} ▼</a>
+                            <div :id="'demo'+ret.name" class="collapse">
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th>2</th>
+                                        <th>{{resultdamage(ret,1.20) | delimiter}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>3</th>
+                                        <th>{{resultdamage(ret,1.44) | delimiter}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>4</th>
+                                        <th>{{resultdamage(ret,1.728) | delimiter}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>5</th>
+                                        <th>{{resultdamage(ret,2.0736) | delimiter}}</th>
+                                    </tr>
+                                </table>
+
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    </div>
+
+    <p>
+        <small>
+        ※ 計算結果は丸めの誤差等でずれる可能性があります。参考程度にしてください。
+        </small>
+    </p>
+    <hr>
+    <div style="padding:10px;height:90px;display:flex;flex-flow:row;justify-content: center;">
+
+        <a href="https://twitter.com/nyam_othellonia">
+            <div style="display:flex;align-items:center;justify-content: center;">
+
+                <img src="images/igel_othello.png" width="50px"/>
+                <span>にゃも</span>
+            </div>
+        </a>
+    </div>
+</div>
+
+<script>
+
+    Vue.filter('delimiter', function (value) {
+        return value.toLocaleString();
+    });
+    var app = new Vue({
+        el: '#app',
+        data: {
+            hp: 27000,
+            list: [
+                {
+                    name: "モルジアナ",
+                    atk: 1138,
+                    selfdamage_per: 14,
+                    enemydamage_per: 125
+                },
+                {
+                    name: "バステト",
+                    atk: 1056,
+                    selfdamage_per: 10,
+                    enemydamage_per: 150
+                },
+                {
+                    name: "ユルグ",
+                    atk: 1029,
+                    selfdamage_per: 12,
+                    enemydamage_per: 125
+                },
+                {
+                    name: "マニアレ",
+                    atk: 1285,
+                    selfdamage_per: 7,
+                    enemydamage_per: 150
+                }
+            ]
+        },
+        computed: {},
+
+        methods: {
+            selfdamage: function (ret) {
+                return Math.round(this.hp * ret.selfdamage_per / 100)
+            },
+            enemydamage: function (ret) {
+                return Math.round(this.hp * ret.selfdamage_per * ret.enemydamage_per / 10000)
+            },
+            totaldamage: function (ret) {
+                return this.enemydamage(ret) + ret.atk;
+            },
+            resultdamage: function (ret, ratio) {
+                return Math.round(this.enemydamage(ret)) + Math.round(ret.atk * ratio);
+            }
+        }
+    })
+</script>
+<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-101029652-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+</body>
+</html>
