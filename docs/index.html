@@ -24,19 +24,40 @@
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
 
-    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 
     <style type="text/css">
-        .scroll::-webkit-scrollbar {
-            　　 /*tableにスクロールバーを追加*/ height: 5px;
+        .form-group input[type="checkbox"] {
+            display: none;
         }
 
-        .scroll::-webkit-scrollbar-track {
-            　　 /*tableにスクロールバーを追加*/ background: #F1F1F1;
+        .form-group input[type="checkbox"] + .btn-group > label span {
+            width: 20px;
         }
 
-        .scroll::-webkit-scrollbar-thumb {
-            　　 /*tableにスクロールバーを追加*/ background: #BCBCBC;
+        .form-group input[type="checkbox"] + .btn-group > label span:first-child {
+            display: none;
+        }
+
+        .form-group input[type="checkbox"] + .btn-group > label span:last-child {
+            display: inline-block;
+        }
+
+        .form-group input[type="checkbox"]:checked + .btn-group > label span:first-child {
+            display: inline-block;
+        }
+
+        .form-group input[type="checkbox"]:checked + .btn-group > label span:last-child {
+            display: none;
+        }
+
+        div.table-responsive::-webkit-scrollbar {
+            background: #eee;
+            height: 8px;
+        }
+
+        div.table-responsive::-webkit-scrollbar-thumb {
+            background: #aaa;
         }
     </style>
 </head>
@@ -61,14 +82,14 @@
                 </div>
             </div>
 
-            <div id="scroll" style="overflow: auto;white-space: nowrap;">
-                <table style="width:500px;" class="table table-striped" style="table-layout:fixed;">
-                    <thead class="thead-inverse">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="">
                     <tr>
-                        <th style="width:90px">名前</th>
-                        <th>ATK</th>
-                        <th>自傷率</th>
-                        <th>相手<br>への<br>ダメージ<br>率</th>
+                        <th>名前</th>
+                        <th v-if="checked_atk">ATK</th>
+                        <th v-if="checked_selfdamage_per">自傷率</th>
+                        <th v-if="checked_enemydamage_per">相手<br>への<br>ダメージ<br>率</th>
                         <th>自傷<br>ダメージ</th>
                         <th>相手<br>への<br>ダメージ</th>
                         <th>1枚返し</th>
@@ -80,10 +101,10 @@
                     </thead>
                     <tbody>
                     <tr v-for="ret in list">
-                        <td>{{ret.name}}</td>
-                        <td>{{ret.atk}}</td>
-                        <td>{{ret.selfdamage_per}}%</td>
-                        <td>{{ret.enemydamage_per}}%</td>
+                        <td class="out-of-table-fixed">{{ret.name}}</td>
+                        <td v-if="checked_atk">{{ret.atk}}</td>
+                        <td v-if="checked_selfdamage_per">{{ret.selfdamage_per}}%</td>
+                        <td v-if="checked_enemydamage_per">{{ret.enemydamage_per}}%</td>
                         <td>{{selfdamage(ret) | delimiter}}</td>
                         <td>{{enemydamage(ret) | delimiter}}</td>
                         <td>{{resultdamage(ret,1) | delimiter}}</td>
@@ -95,8 +116,18 @@
                     </tbody>
                 </table>
             </div>
-        </form>
+
+            <!--
+            <div style="display:flex">
+                <my-component label="ATK" v-model="checked_atk"></my-component>
+                <my-component label="自傷率" v-model="checked_selfdamage_per"></my-component>
+                <my-component label="相手へのダメージ率" v-model="checked_enemydamage_per"></my-component>
+
+                {{checked_enemydamage_per}}
+            </div>
+            -->
     </div>
+    </form>
     <small>
         <p>
             ※ 計算結果は横にスクロールします。
@@ -118,60 +149,7 @@
     </div>
 </div>
 
-<script>
-
-    Vue.filter('delimiter', function (value) {
-        return value.toLocaleString();
-    });
-    var app = new Vue({
-        el: '#app',
-        data: {
-            hp: 27000,
-            list: [
-                {
-                    name: "モルジアナ",
-                    atk: 1138,
-                    selfdamage_per: 14,
-                    enemydamage_per: 125
-                },
-                {
-                    name: "バステト",
-                    atk: 1056,
-                    selfdamage_per: 10,
-                    enemydamage_per: 150
-                },
-                {
-                    name: "ユルグ",
-                    atk: 1029,
-                    selfdamage_per: 12,
-                    enemydamage_per: 125
-                },
-                {
-                    name: "マニアレ",
-                    atk: 1285,
-                    selfdamage_per: 7,
-                    enemydamage_per: 150
-                }
-            ]
-        },
-        computed: {},
-
-        methods: {
-            selfdamage: function (ret) {
-                return Math.round(this.hp * ret.selfdamage_per / 100)
-            },
-            enemydamage: function (ret) {
-                return Math.round(this.hp * ret.selfdamage_per * ret.enemydamage_per / 10000)
-            },
-            totaldamage: function (ret) {
-                return this.enemydamage(ret) + ret.atk;
-            },
-            resultdamage: function (ret, ratio) {
-                return Math.round(this.enemydamage(ret)) + Math.round(ret.atk * ratio);
-            }
-        }
-    })
-</script>
+<script src="./index.js"></script>
 <script>
     (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;
