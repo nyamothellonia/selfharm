@@ -74,12 +74,15 @@
             </div>
             <div class="form-group">
                 <div class="input-group">
-                    <span class="input-group-addon" id="target-atk">最大HP</span>
-                    <input type="number" class="form-control" aria-describedby="target-atk" value=""
+                    <span class="input-group-addon" id="target-hp">最大HP</span>
+                    <input type="number" class="form-control" aria-describedby="target-hp" value=""
                            v-model="hp"
                            placeholder="">
 
                 </div>
+            </div>
+            <div class="form-group">
+                <input id="volumeSlider" type="range" min="10000" max="40000" step="500" v-model="hp"  />
             </div>
 
             <div class="table-responsive">
@@ -87,11 +90,11 @@
                     <thead class="">
                     <tr>
                         <th>名前</th>
-                        <th v-if="checked_atk">ATK</th>
                         <th v-if="checked_selfdamage_per">自傷率</th>
-                        <th v-if="checked_enemydamage_per">相手<br>への<br>ダメージ<br>率</th>
-                        <th>自傷<br>ダメージ</th>
-                        <th>相手<br>への<br>ダメージ</th>
+                        <th v-if="checked_enemydamage_per">ダメ率</th>
+                        <th>自傷<br>ダメ</th>
+                        <th>相手<br>への<br>ダメ</th>
+                        <th v-if="checked_atk">ATK</th>
                         <th>1枚返し</th>
                         <th>2枚</th>
                         <th>3枚</th>
@@ -102,11 +105,11 @@
                     <tbody>
                     <tr v-for="ret in list">
                         <td class="out-of-table-fixed">{{ret.name}}</td>
-                        <td v-if="checked_atk">{{ret.atk}}</td>
                         <td v-if="checked_selfdamage_per">{{ret.selfdamage_per}}%</td>
                         <td v-if="checked_enemydamage_per">{{ret.enemydamage_per}}%</td>
                         <td>{{selfdamage(ret) | delimiter}}</td>
                         <td>{{enemydamage(ret) | delimiter}}</td>
+                        <td v-if="checked_atk">{{ret.atk}}</td>
                         <td>{{resultdamage(ret,1) | delimiter}}</td>
                         <td>{{resultdamage(ret,1.20) | delimiter}}</td>
                         <td>{{resultdamage(ret,1.44) | delimiter}}</td>

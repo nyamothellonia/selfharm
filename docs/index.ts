@@ -30,7 +30,7 @@ const app = new Vue({
   el: '#app',
   data: {
     hp: 27000,
-    checked_atk: true,
+    checked_atk: false,
     checked_selfdamage_per: true,
     checked_enemydamage_per: true,
 
