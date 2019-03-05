@@ -21,25 +21,61 @@ var app = new Vue({
         checked_enemydamage_per: true,
         list: [
             {
-                name: "モルジアナ",
+                name: '2周年メーティス',
+                atk: 939,
+                selfdamage_per: 5,
+                enemydamage_per: 200
+            },
+            {
+                name: 'オーリック',
+                atk: 1082,
+                selfdamage_per: 7,
+                enemydamage_per: 120
+            },
+            {
+                name: 'フーバス',
+                atk: 978,
+                selfdamage_per: 8,
+                enemydamage_per: 100
+            },
+            {
+                name: 'クリファス',
+                atk: 998,
+                selfdamage_per: 6,
+                enemydamage_per: 160
+            },
+            {
+                name: 'ネイト',
+                atk: 1126,
+                selfdamage_per: 13,
+                enemydamage_per: 120
+            },
+            {
+                name: '闘化スーリヤ',
+                atk: 1195,
+                selfdamage_per: 8,
+                enemydamage_per: 170
+            },
+            {
+                name: 'モルジアナ',
                 atk: 1138,
                 selfdamage_per: 14,
                 enemydamage_per: 125
             },
             {
-                name: "バステト",
+                name: 'バステト',
                 atk: 1056,
                 selfdamage_per: 10,
                 enemydamage_per: 150
             },
             {
-                name: "ユルグ",
+                name: 'ユルグ',
                 atk: 1029,
                 selfdamage_per: 12,
                 enemydamage_per: 125
             },
             {
-                name: "マニアレ",
+                name: 'マニアレ',
                 atk: 1285,
                 selfdamage_per: 7,
                 enemydamage_per: 150
